@@ -1,15 +1,19 @@
-import React from 'react';
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import React from "react";
 
-const Task = ({taskText, taskCreationDate}) => {
+function Task(props) {
+  const { taskText, taskCreationDate } = props;
+  const { onToggleDone, onDeleted } = props;
+
   return (
-    <div class="view">
-      <input class="toggle" type="checkbox" />
+    <div className="view">
+      <input className="toggle" type="checkbox" onChange={onToggleDone} />
       <label>
-        <span class="description">{taskText}</span>
-        <span class="created">{taskCreationDate}</span>
+        <span className="description">{taskText}</span>
+        <span className="created">{taskCreationDate}</span>
       </label>
-      <button class="icon icon-edit"></button>
-      <button class="icon icon-destroy"></button>
+      <button className="icon icon-edit" type="button" aria-label="Edit" />
+      <button className="icon icon-destroy" type="button" aria-label="Delete" onClick={onDeleted} />
     </div>
   );
 }

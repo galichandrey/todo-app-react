@@ -1,24 +1,31 @@
-import React from 'react';
-import Task from '../Task';
+/* eslint-disable max-len */
+import React from "react";
 
-const TaskList = ({tasks}) => {
+import Task from "../Task";
 
-  const elements = tasks.map((item)=>{
+function TaskList({ tasks, onToggleDone, onDeleted }) {
+  const elements = tasks.map((item) => {
+    // eslint-disable-next-line object-curly-newline
+    const { taskText, done, taskCreationDate, id } = item;
+
+    let classNames = "active";
+    if (done) {
+      classNames = "completed";
+    }
+
     return (
-      <li className={item.status}>
-        <Task taskText={item.taskText} taskCreationDate={item.taskCreationDate} />
-        <input type="text" class="edit" value="Editing task" />
+      <li key={id} className={classNames}>
+        <Task
+          taskText={taskText}
+          taskCreationDate={taskCreationDate}
+          onToggleDone={() => onToggleDone(id)}
+          onDeleted={() => onDeleted(id)}
+        />
+        <input type="text" className="edit" value="Editing task" />
       </li>
     );
-  
   });
-
-    return (
-      <ul class="todo-list">
-        { elements }
-      </ul>
-    );
-    
+  return <ul className="todo-list">{elements}</ul>;
 }
 
 export default TaskList;

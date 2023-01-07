@@ -1,12 +1,21 @@
-import React from 'react';
+/* eslint-disable react/jsx-one-expression-per-line */
+import React from "react";
+
 import TasksFilter from "../TasksFilter";
 
-const Footer = () => {
+function Footer({ tasks }) {
+  const doneCount = tasks.filter((element) => element.done).length;
+  const todoCount = tasks.length - doneCount;
+  // eslint-disable-next-line no-console
+  console.log(doneCount, todoCount);
+
   return (
-    <footer class="footer">
-      <span class="todo-count">1 items left</span>
+    <footer className="footer">
+      <span className="todo-count">{todoCount} items left</span>
       <TasksFilter />
-      <button class="clear-completed">Clear completed</button>
+      <button className="clear-completed" type="button">
+        Clear completed
+      </button>
     </footer>
   );
 }

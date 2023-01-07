@@ -1,16 +1,18 @@
 import React from "react";
 
-const TaskFilter = () => {
+function TaskFilter() {
   return (
-    <ul class="filters">
+    <ul className="filters">
       <li>
-        <button class="selected">All</button>
+        <button className="selected" type="button">
+          All
+        </button>
       </li>
       <li>
-        <button>Active</button>
+        <button type="button">Active</button>
       </li>
       <li>
-        <button>Completed</button>
+        <button type="button">Completed</button>
       </li>
     </ul>
   );

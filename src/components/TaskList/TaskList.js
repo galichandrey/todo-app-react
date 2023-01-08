@@ -9,13 +9,16 @@ function TaskList({ tasks, onToggleDone, onDeleted }) {
     const { taskText, done, taskCreationDate, id } = item;
 
     let classNames = "active";
+    let checked = false;
     if (done) {
       classNames = "completed";
+      checked = true;
     }
 
     return (
       <li key={id} className={classNames}>
         <Task
+          checked={checked}
           taskText={taskText}
           taskCreationDate={taskCreationDate}
           onToggleDone={() => onToggleDone(id)}

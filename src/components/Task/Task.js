@@ -3,11 +3,11 @@ import React from "react";
 
 function Task(props) {
   const { taskText, taskCreationDate } = props;
-  const { onToggleDone, onDeleted } = props;
+  const { onToggleDone, onDeleted, checked } = props;
 
   return (
     <div className="view">
-      <input className="toggle" type="checkbox" onChange={onToggleDone} />
+      <input className="toggle" type="checkbox" onChange={onToggleDone} checked={checked} />
       <label>
         <span className="description">{taskText}</span>
         <span className="created">{taskCreationDate}</span>

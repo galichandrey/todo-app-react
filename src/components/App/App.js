@@ -1,5 +1,4 @@
-/* eslint-disable max-len */
-/* eslint-disable no-console */
+/* eslint-disable react/no-unused-class-component-methods */
 import React, { Component } from "react";
 
 import Header from "../Header";
@@ -14,8 +13,6 @@ export default class App extends Component {
     this.maxId = 100;
     this.state = {
       tasks: [
-        this.createTodoItem("First task"),
-        this.createTodoItem("Second task"),
         // {
         //   taskText: "Completed task",
         //   status: "completed",
@@ -35,14 +32,17 @@ export default class App extends Component {
         //   taskCreationDate: "created 5 minutes ago",
         //   id: 3,
         // },
-        this.createTodoItem("Another task"),
-        this.createTodoItem("Some task"),
-        this.createTodoItem("Super task!"),
+        this.createTodoItem("First task", new Date("Jan 10 2023 10:03:27")),
+        this.createTodoItem("Second task", new Date("Jan 10 2023 10:23:27")),
+        this.createTodoItem("Another task", new Date("Jan 10 2023 10:33:27")),
+        this.createTodoItem("Some task", new Date("Jan 10 2023 10:43:27")),
+        this.createTodoItem("Super task!", new Date("Jan 10 2023 11:53:27")),
       ],
       filter: "all",
     };
     this.deleteItem = this.deleteItem.bind(this);
     this.addItem = this.addItem.bind(this);
+    this.editTask = this.editTask.bind(this);
     this.onToggleDone = this.onToggleDone.bind(this);
     this.clearCompleted = this.clearCompleted.bind(this);
     this.filterFunc = this.filterFunc.bind(this);
@@ -53,11 +53,9 @@ export default class App extends Component {
     this.setState(({ tasks }) => {
       const index = tasks.findIndex((element) => element.id === id);
 
-      // 1. update object
       const oldItem = tasks[index];
       const newItem = { ...oldItem, done: !oldItem.done };
 
-      // 2. construct new array
       const before = tasks.slice(0, index);
       const after = tasks.slice(index + 1);
 
@@ -66,11 +64,31 @@ export default class App extends Component {
         tasks: newArray,
       };
     });
-    console.log(id);
   }
 
   onFiltered(filter) {
     this.setState({ filter });
+  }
+
+  editTask(id, text) {
+    this.setState(({ tasks }) => {
+      // eslint-disable-next-line no-console
+      console.log(id, text);
+      const index = tasks.findIndex((element) => element.id === id);
+
+      const oldItem = tasks[index];
+      const newItem = { ...oldItem, taskText: text };
+
+      const before = tasks.slice(0, index);
+      const after = tasks.slice(index + 1);
+
+      const newArray = [...before, newItem, ...after];
+      // eslint-disable-next-line no-console
+      // console.log("editTask is fired!");
+      return {
+        tasks: newArray,
+      };
+    });
   }
 
   filterFunc(filter) {
@@ -79,12 +97,10 @@ export default class App extends Component {
       return [...tasks];
     }
     if (filter === "active") {
-      const newArray = [...tasks];
-      return newArray.filter((element) => !element.done);
+      return [...tasks].filter((element) => !element.done);
     }
     if (filter === "completed") {
-      const newArray = [...tasks];
-      return newArray.filter((element) => element.done);
+      return [...tasks].filter((element) => element.done);
     }
     return [...tasks];
   }
@@ -114,13 +130,13 @@ export default class App extends Component {
     });
   }
 
-  createTodoItem(todoText) {
+  createTodoItem(todoText = "My Task", taskCreationDate = new Date(Date.now())) {
     this.maxId += 1;
     return {
-      taskText: todoText,
-      done: false,
-      taskCreationDate: "created 1 minute ago",
       id: this.maxId,
+      taskText: todoText,
+      taskCreationDate,
+      done: false,
     };
   }
 
@@ -139,15 +155,24 @@ export default class App extends Component {
     const { tasks, filter } = this.state;
 
     const visibleTasks = this.filterFunc(filter);
-    console.log(visibleTasks);
 
     return (
       <section className="todoapp">
         <Header addItem={this.addItem} />
 
         <section className="main">
-          <TaskList tasks={visibleTasks} onToggleDone={this.onToggleDone} onDeleted={this.deleteItem} />
-          <Footer tasks={tasks} filter={filter} onFiltered={this.onFiltered} clearCompleted={this.clearCompleted} />
+          <TaskList
+            tasks={visibleTasks}
+            onToggleDone={this.onToggleDone}
+            onDeleted={this.deleteItem}
+            editTask={this.editTask}
+          />
+          <Footer
+            tasks={tasks}
+            filter={filter}
+            onFiltered={this.onFiltered}
+            clearCompleted={this.clearCompleted}
+          />
         </section>
       </section>
     );

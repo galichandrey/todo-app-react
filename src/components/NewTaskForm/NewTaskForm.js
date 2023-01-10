@@ -1,11 +1,10 @@
-import React from "react";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 
-export default class NewTaskForm extends React.Component {
-  // eslint-disable-next-line class-methods-use-this
+export default class NewTaskForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // eslint-disable-next-line react/no-unused-state
       label: "",
     };
     this.onLabelChange = this.onLabelChange.bind(this);
@@ -13,22 +12,16 @@ export default class NewTaskForm extends React.Component {
   }
 
   onLabelChange(e) {
-    // e.preventDefault();
-    // eslint-disable-next-line no-console
     this.setState({
-      // eslint-disable-next-line react/no-unused-state
       label: e.target.value,
     });
-    // console.log(e.target.value);
   }
 
   onSubmit(e) {
+    const { addItem } = this.props;
+    const { label } = this.state;
     e.preventDefault();
-    // const { addItem } = this.props;
-    // eslint-disable-next-line react/destructuring-assignment
-    this.props.addItem(this.state.label);
-    // addItem("helllooo :D");
-    // onItemAdded(label);
+    addItem(label);
     this.setState({
       label: "",
     });
@@ -45,8 +38,15 @@ export default class NewTaskForm extends React.Component {
           onChange={this.onLabelChange}
           value={label}
         />
-        {/* <button type="submit">Add Item</button> */}
       </form>
     );
   }
 }
+
+NewTaskForm.defaultProps = {
+  addItem: () => {},
+};
+
+NewTaskForm.propTypes = {
+  addItem: PropTypes.func,
+};

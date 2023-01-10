@@ -1,5 +1,5 @@
-/* eslint-disable react/no-unused-state */
 import React from "react";
+import PropTypes from "prop-types";
 
 export default class TaskFilter extends React.Component {
   constructor() {
@@ -31,7 +31,11 @@ export default class TaskFilter extends React.Component {
       const classNames = isActive ? "selected" : "noClass";
       return (
         <li key={name}>
-          <button type="button" className={classNames} onClick={() => onFiltered(name)}>
+          <button
+            type="button"
+            className={classNames}
+            onClick={() => onFiltered(name)}
+          >
             {label}
           </button>
         </li>
@@ -40,3 +44,13 @@ export default class TaskFilter extends React.Component {
     return <ul className="filters">{elements}</ul>;
   }
 }
+
+TaskFilter.defaultProps = {
+  filter: "all",
+  onFiltered: () => {},
+};
+
+TaskFilter.propTypes = {
+  filter: PropTypes.string,
+  onFiltered: PropTypes.func,
+};

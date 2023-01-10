@@ -1,34 +1,38 @@
-/* eslint-disable max-len */
 import React from "react";
+import PropTypes from "prop-types";
 
 import Task from "../Task";
 
-function TaskList({ tasks, onToggleDone, onDeleted }) {
+export default function TaskList(props) {
+  const { editTask } = props;
+  const { tasks, onToggleDone, onDeleted } = props;
+
   const elements = tasks.map((item) => {
     // eslint-disable-next-line object-curly-newline
-    const { taskText, done, taskCreationDate, id } = item;
-
-    let classNames = "active";
-    let checked = false;
-    if (done) {
-      classNames = "completed";
-      checked = true;
-    }
-
+    const { id, taskText, taskCreationDate, done } = item;
     return (
-      <li key={id} className={classNames}>
-        <Task
-          checked={checked}
-          taskText={taskText}
-          taskCreationDate={taskCreationDate}
-          onToggleDone={() => onToggleDone(id)}
-          onDeleted={() => onDeleted(id)}
-        />
-        <input type="text" className="edit" value="Editing task" />
-      </li>
+      <Task
+        id={id}
+        key={id}
+        taskText={taskText}
+        taskCreationDate={taskCreationDate}
+        done={done}
+        onToggleDone={() => onToggleDone(id)}
+        onDeleted={() => onDeleted(id)}
+        editTask={editTask}
+      />
     );
   });
   return <ul className="todo-list">{elements}</ul>;
 }
 
-export default TaskList;
+TaskList.defaultProps = {
+  tasks: PropTypes.shape({
+    taskText: PropTypes.string,
+    done: PropTypes.bool,
+    taskCreationDate: PropTypes.number,
+    id: PropTypes.number,
+  }),
+  onToggleDone: PropTypes.func,
+  onDeleted: PropTypes.func,
+};

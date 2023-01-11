@@ -93,7 +93,6 @@ export default class Task extends React.Component {
           <input
             type="text"
             className="edit"
-            // defaultValue={this.state.taskText}
             value={taskText}
             onChange={this.handleEditing}
             id="idForInput"

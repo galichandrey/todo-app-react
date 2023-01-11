@@ -13,25 +13,6 @@ export default class App extends Component {
     this.maxId = 100;
     this.state = {
       tasks: [
-        // {
-        //   taskText: "Completed task",
-        //   status: "completed",
-        //   taskCreationDate: "created 17 seconds ago",
-        //   id: 1,
-        // },
-        // {
-        //   taskText: "Editing task",
-        //   // status: "active ",
-        //   status: "editing",
-        //   taskCreationDate: "Now",
-        //   id: 2,
-        // },
-        // {
-        //   taskText: "Active task",
-        //   status: "active",
-        //   taskCreationDate: "created 5 minutes ago",
-        //   id: 3,
-        // },
         this.createTodoItem("First task", new Date("Jan 10 2023 10:03:27")),
         this.createTodoItem("Second task", new Date("Jan 10 2023 10:23:27")),
         this.createTodoItem("Another task", new Date("Jan 10 2023 10:33:27")),
@@ -72,8 +53,6 @@ export default class App extends Component {
 
   editTask(id, text) {
     this.setState(({ tasks }) => {
-      // eslint-disable-next-line no-console
-      console.log(id, text);
       const index = tasks.findIndex((element) => element.id === id);
 
       const oldItem = tasks[index];
@@ -83,8 +62,6 @@ export default class App extends Component {
       const after = tasks.slice(index + 1);
 
       const newArray = [...before, newItem, ...after];
-      // eslint-disable-next-line no-console
-      // console.log("editTask is fired!");
       return {
         tasks: newArray,
       };

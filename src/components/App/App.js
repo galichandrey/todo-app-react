@@ -1,5 +1,5 @@
-/* eslint-disable react/no-unused-class-component-methods */
 import React, { Component } from "react";
+import { v4 as uuid } from "uuid";
 
 import Header from "../Header";
 import Footer from "../Footer";
@@ -10,27 +10,19 @@ import "./App.css";
 export default class App extends Component {
   constructor() {
     super();
-    this.maxId = 100;
     this.state = {
       tasks: [
-        this.createTodoItem("First task", new Date("Jan 10 2023 10:03:27")),
+        this.createTodoItem("First task", new Date("Jan 09 2023 09:03:27")),
         this.createTodoItem("Second task", new Date("Jan 10 2023 10:23:27")),
         this.createTodoItem("Another task", new Date("Jan 10 2023 10:33:27")),
         this.createTodoItem("Some task", new Date("Jan 10 2023 10:43:27")),
-        this.createTodoItem("Super task!", new Date("Jan 10 2023 11:53:27")),
+        this.createTodoItem("Super task!", new Date("Jan 11 2023 11:53:27")),
       ],
       filter: "all",
     };
-    this.deleteItem = this.deleteItem.bind(this);
-    this.addItem = this.addItem.bind(this);
-    this.editTask = this.editTask.bind(this);
-    this.onToggleDone = this.onToggleDone.bind(this);
-    this.clearCompleted = this.clearCompleted.bind(this);
-    this.filterFunc = this.filterFunc.bind(this);
-    this.onFiltered = this.onFiltered.bind(this);
   }
 
-  onToggleDone(id) {
+  onToggleDone = (id) => {
     this.setState(({ tasks }) => {
       const index = tasks.findIndex((element) => element.id === id);
 
@@ -45,13 +37,13 @@ export default class App extends Component {
         tasks: newArray,
       };
     });
-  }
+  };
 
-  onFiltered(filter) {
+  onFiltered = (filter) => {
     this.setState({ filter });
-  }
+  };
 
-  editTask(id, text) {
+  editTask = (id, text) => {
     this.setState(({ tasks }) => {
       const index = tasks.findIndex((element) => element.id === id);
 
@@ -66,23 +58,26 @@ export default class App extends Component {
         tasks: newArray,
       };
     });
-  }
+  };
 
-  filterFunc(filter) {
+  filterFunc = (filter) => {
     const { tasks } = this.state;
-    if (filter === "all") {
-      return [...tasks];
-    }
-    if (filter === "active") {
-      return [...tasks].filter((element) => !element.done);
-    }
-    if (filter === "completed") {
-      return [...tasks].filter((element) => element.done);
-    }
-    return [...tasks];
-  }
+    switch (filter) {
+      case "all":
+        return [...tasks];
 
-  deleteItem(id) {
+      case "active":
+        return [...tasks].filter((element) => !element.done);
+
+      case "completed":
+        return [...tasks].filter((element) => element.done);
+
+      default:
+        return [...tasks];
+    }
+  };
+
+  deleteItem = (id) => {
     this.setState(({ tasks }) => {
       const index = tasks.findIndex((element) => element.id === id);
 
@@ -95,9 +90,10 @@ export default class App extends Component {
         tasks: newArray,
       };
     });
-  }
+  };
 
-  addItem(text) {
+  addItem = (text) => {
+    if (!text.trim()) return;
     const newItem = this.createTodoItem(text);
     this.setState(({ tasks }) => {
       const newArray = [...tasks, newItem];
@@ -105,19 +101,16 @@ export default class App extends Component {
         tasks: newArray,
       };
     });
-  }
+  };
 
-  createTodoItem(todoText = "My Task", taskCreationDate = new Date(Date.now())) {
-    this.maxId += 1;
-    return {
-      id: this.maxId,
-      taskText: todoText,
-      taskCreationDate,
-      done: false,
-    };
-  }
+  createTodoItem = (todoText = "My Task", taskCreationDate = new Date(Date.now())) => ({
+    id: uuid(),
+    taskText: todoText,
+    taskCreationDate,
+    done: false,
+  });
 
-  clearCompleted() {
+  clearCompleted = () => {
     this.setState(({ tasks }) => {
       const newArray = [...tasks];
       const clearedArray = newArray.filter((element) => !element.done);
@@ -126,7 +119,7 @@ export default class App extends Component {
         tasks: clearedArray,
       };
     });
-  }
+  };
 
   render() {
     const { tasks, filter } = this.state;

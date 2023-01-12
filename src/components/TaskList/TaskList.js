@@ -12,8 +12,8 @@ export default function TaskList(props) {
     const { id, taskText, taskCreationDate, done } = item;
     return (
       <Task
-        id={id}
         key={id}
+        id={id}
         taskText={taskText}
         taskCreationDate={taskCreationDate}
         done={done}

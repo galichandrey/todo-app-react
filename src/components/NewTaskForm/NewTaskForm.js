@@ -7,17 +7,15 @@ export default class NewTaskForm extends Component {
     this.state = {
       label: "",
     };
-    this.onLabelChange = this.onLabelChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
   }
 
-  onLabelChange(e) {
+  onLabelChange = (e) => {
     this.setState({
       label: e.target.value,
     });
-  }
+  };
 
-  onSubmit(e) {
+  onSubmit = (e) => {
     const { addItem } = this.props;
     const { label } = this.state;
     e.preventDefault();
@@ -25,7 +23,7 @@ export default class NewTaskForm extends Component {
     this.setState({
       label: "",
     });
-  }
+  };
 
   render() {
     const { label } = this.state;

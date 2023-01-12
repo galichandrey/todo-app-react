@@ -10,23 +10,20 @@ export default class Task extends React.Component {
       taskText,
       isEditing: false,
     };
-    this.taskCreationDateConverted = this.taskCreationDateConverted.bind(this);
-    this.handleEditing = this.handleEditing.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.setEditingState = this.setEditingState.bind(this);
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
-    const { id, editTask } = this.props;
     const { taskText } = this.state;
+    if (!taskText.trim()) return;
+    const { id, editTask } = this.props;
     editTask(id, taskText);
     this.setEditingState(false);
-  }
+  };
 
-  handleEditing(event) {
+  handleEditing = (event) => {
     this.setState({ taskText: event.target.value });
-  }
+  };
 
   setEditingState(isEdit) {
     // eslint-disable-next-line arrow-body-style
@@ -51,8 +48,8 @@ export default class Task extends React.Component {
     let classNames = "active";
     let checked = false;
     if (done) {
-      classNames = "completed";
       checked = true;
+      classNames = "completed";
     }
 
     if (isEditing) {
@@ -65,38 +62,40 @@ export default class Task extends React.Component {
           key={id}
           className={classNames}
         >
-          <div className="view">
+          {isEditing ? (
             <input
-              className="toggle"
-              type="checkbox"
-              onChange={onToggleDone}
-              checked={checked}
+              type="text"
+              className="edit"
+              value={taskText}
+              onChange={this.handleEditing}
+              id="idForInput"
             />
-            <label htmlFor="idForInput">
-              <span className="description">{taskText}</span>
-              <span className="created">{this.taskCreationDateConverted()}</span>
-            </label>
-            <button
-              className="icon icon-edit"
-              type="button"
-              aria-label="Edit"
-              onClick={() => this.setEditingState(true)}
-            />
-            <button
-              className="icon icon-destroy"
-              type="button"
-              aria-label="Delete"
-              onClick={onDeleted}
-            />
-          </div>
-
-          <input
-            type="text"
-            className="edit"
-            value={taskText}
-            onChange={this.handleEditing}
-            id="idForInput"
-          />
+          ) : (
+            <div className="view">
+              <input
+                className="toggle"
+                type="checkbox"
+                onChange={onToggleDone}
+                checked={checked}
+              />
+              <label htmlFor="idForInput">
+                <span className="description">{taskText}</span>
+                <span className="created">{this.taskCreationDateConverted()}</span>
+              </label>
+              <button
+                className="icon icon-edit"
+                type="button"
+                aria-label="Edit"
+                onClick={() => this.setEditingState(true)}
+              />
+              <button
+                className="icon icon-destroy"
+                type="button"
+                aria-label="Delete"
+                onClick={onDeleted}
+              />
+            </div>
+          )}
         </li>
       </form>
     );
@@ -112,7 +111,7 @@ Task.defaultProps = {
 
 Task.propTypes = {
   taskText: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  taskCreationDate: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  taskCreationDate: PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.number]),
   onToggleDone: PropTypes.func,
   onDeleted: PropTypes.func,
 };

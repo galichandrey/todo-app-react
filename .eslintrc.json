@@ -30,7 +30,9 @@
   "plugins": ["jsx-a11y", "react", "react-hooks", "prettier", "import"],
   "rules": {
     "indent": ["error", 2, { "SwitchCase": 1 }],
-    "prettier/prettier": [ "warn", {
+    "prettier/prettier": [
+      "warn",
+      {
         "endOfLine": "auto"
       }
     ],

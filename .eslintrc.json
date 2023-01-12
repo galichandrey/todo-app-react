@@ -30,7 +30,12 @@
   "plugins": ["jsx-a11y", "react", "react-hooks", "prettier", "import"],
   "rules": {
     "indent": ["error", 2, { "SwitchCase": 1 }],
-    "prettier/prettier": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
     "linebreak-style": [0, "unix"],
     "quotes": ["error", "double"],
     "semi": ["error", "always"],

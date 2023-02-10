@@ -51,6 +51,7 @@
         "newlines-between": "always"
       }
     ]
+    // "enforceForClassFields": true
   },
   "settings": {
     "import/resolver": {

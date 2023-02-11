@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import React, { Component } from "react";
 import { v4 as uuid } from "uuid";
 
@@ -51,19 +52,14 @@ export default class App extends Component {
   };
 
   // eslint-disable-next-line class-methods-use-this
-  convertMinToSec = (min, sec) => {
-    // eslint-disable-next-line no-console
-    console.log(min, sec);
-    return Number(min * 60) + Number(sec);
-  };
+  convertMinToSec = (min, sec) => Number(min * 60) + Number(sec);
 
   editTask = (id, text) => {
     this.setState(({ tasks }) => {
       const index = tasks.findIndex((element) => element.id === id);
 
       const oldItem = tasks[index];
-      // eslint-disable-next-line no-console
-      console.log(oldItem.taskText);
+
       const newItem = { ...oldItem, taskText: text };
 
       const before = tasks.slice(0, index);
@@ -74,42 +70,6 @@ export default class App extends Component {
         tasks: newArray,
       };
     });
-  };
-
-  // eslint-disable-next-line react/no-unused-class-component-methods
-  startTimer = () => {
-    let { timeLeft } = this.state;
-    const timerId = setInterval(() => {
-      timeLeft -= 1;
-      if (timeLeft === 0) {
-        clearInterval(timerId);
-      }
-      this.setState({
-        timeLeft,
-      });
-    }, 1000);
-    // eslint-disable-next-line react/no-unused-state
-    return this.setState({ timeLeft, timerId });
-
-    // this.setState(({ tasks, timeLeft }) => {
-    //   const index = tasks.findIndex((element) => element.id === id);
-    //   const oldItem = tasks[index];
-
-    //   timeLeft -= 1;
-    //   if (timeLeft === 0) {
-    //     clearInterval(timerId);
-    //   }
-
-    //   const newItem = { ...oldItem, timeLeft };
-
-    //   const before = tasks.slice(0, index);
-    //   const after = tasks.slice(index + 1);
-
-    //   const newArray = [...before, newItem, ...after];
-    //   return {
-    //     tasks: newArray,
-    //   };
-    // });
   };
 
   filterFunc = (filter) => {
@@ -161,6 +121,7 @@ export default class App extends Component {
     taskCreationDate,
     done: false,
     timeLeft,
+    timerId: 0,
   });
 
   clearCompleted = () => {
@@ -174,16 +135,58 @@ export default class App extends Component {
     });
   };
 
-  // eslint-disable-next-line class-methods-use-this
-  playTimer = () => {
-    // eslint-disable-next-line no-console
-    console.log("Play - click");
+  playTaskTimer = (id) => {
+    if (this.isTimerIdExist(id)) return;
+
+    const timerId = setInterval(() => {
+      this.setState(({ tasks }) => {
+        const index = tasks.findIndex((element) => element.id === id);
+        const oldItem = tasks[index];
+        let timeLeft = oldItem.timeLeft - 1;
+        if (timeLeft <= 0) {
+          this.pauseTaskTimer(id);
+          timeLeft = 0;
+        }
+        const newItem = { ...oldItem, timeLeft };
+
+        const before = tasks.slice(0, index);
+        const after = tasks.slice(index + 1);
+
+        const newArray = [...before, newItem, ...after];
+        return {
+          tasks: newArray,
+        };
+      });
+    }, 1000);
+
+    this.setState(({ tasks }) => {
+      const index = tasks.findIndex((element) => element.id === id);
+      const oldItem = tasks[index];
+      const newItem = { ...oldItem, timerId };
+
+      const before = tasks.slice(0, index);
+      const after = tasks.slice(index + 1);
+
+      const newArray = [...before, newItem, ...after];
+      return {
+        tasks: newArray,
+      };
+    });
   };
 
-  // eslint-disable-next-line class-methods-use-this
-  pauseTimer = () => {
-    // eslint-disable-next-line no-console
-    console.log("Pause - click");
+  isTimerIdExist = (id) => {
+    const { tasks } = this.state;
+    const index = tasks.findIndex((element) => element.id === id);
+    const checkTimer = tasks[index];
+    return Boolean(checkTimer.timerId);
+  };
+
+  pauseTaskTimer = (id) => {
+    const { tasks } = this.state;
+    const index = tasks.findIndex((element) => element.id === id);
+    const { timerId } = tasks[index];
+
+    clearInterval(timerId);
   };
 
   render() {
@@ -204,8 +207,8 @@ export default class App extends Component {
             onToggleDone={this.onToggleDone}
             onDeleted={this.deleteItem}
             editTask={this.editTask}
-            playTimer={this.playTimer}
-            pauseTimer={this.pauseTimer}
+            playTaskTimer={this.playTaskTimer}
+            pauseTaskTimer={this.pauseTaskTimer}
             convertSecToMin={this.convertSecToMin}
           />
           <Footer

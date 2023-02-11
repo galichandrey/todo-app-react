@@ -15,13 +15,12 @@ export default class NewTaskForm extends Component {
 
   onLabelChange = (e) => {
     const { name } = e.target;
-    console.log(name);
+
     let { value } = e.target;
 
     if (e.target.type === "number" && e.target.value < 0) {
       value = 0;
     }
-    console.log(name, value);
 
     this.setState({
       [name]: value,
@@ -30,7 +29,6 @@ export default class NewTaskForm extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    console.log("onSubmit activated!");
 
     const { addItem } = this.props;
     const { taskText, min, sec } = this.state;
@@ -38,10 +36,8 @@ export default class NewTaskForm extends Component {
     const { convertMinToSec } = this.props;
 
     const time = convertMinToSec(min, sec);
-    // console.log(time);
 
     if (time) {
-      console.log(taskText, time);
       addItem(taskText, time);
       this.setState({
         taskText: "",

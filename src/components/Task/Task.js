@@ -1,6 +1,3 @@
-/* eslint-disable react/jsx-one-expression-per-line */
-/* eslint-disable no-console */
-/* eslint-disable jsx-a11y/control-has-associated-label */
 import React from "react";
 import PropTypes from "prop-types";
 import { formatDistanceToNow } from "date-fns";
@@ -29,14 +26,11 @@ export default class Task extends React.Component {
     this.setState({ taskText: event.target.value });
   };
 
-  setEditingState(isEdit) {
-    // eslint-disable-next-line arrow-body-style
-    this.setState(() => {
-      return {
-        isEditing: isEdit,
-      };
-    });
-  }
+  setEditingState = (isEdit) => {
+    this.setState(() => ({
+      isEditing: isEdit,
+    }));
+  };
 
   taskCreationDateConverted() {
     const { taskCreationDate } = this.props;
@@ -49,11 +43,9 @@ export default class Task extends React.Component {
     const { taskText } = this.state;
     const { isEditing } = this.state;
     const { timeLeft } = this.props;
-    // console.log(timeLeft);
     const { convertSecToMin } = this.props;
     const time = convertSecToMin(timeLeft);
-    // console.log(time);
-    const { playTimer, pauseTimer } = this.props;
+    const { playTaskTimer, pauseTaskTimer } = this.props;
 
     let classNames = "active";
     let checked = false;
@@ -67,7 +59,6 @@ export default class Task extends React.Component {
     }
 
     return (
-      // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
       <form onSubmit={this.handleSubmit}>
         <li
           key={id}
@@ -95,12 +86,14 @@ export default class Task extends React.Component {
                   <button
                     type="button"
                     className="icon icon-play"
-                    onClick={playTimer}
+                    onClick={() => playTaskTimer(id)}
+                    aria-label="Play"
                   />
                   <button
                     type="button"
                     className="icon icon-pause"
-                    onClick={pauseTimer}
+                    onClick={() => pauseTaskTimer(id)}
+                    aria-label="Pause"
                   />
                   {time[0] < 10 ? ` 0${time[0]}:` : ` ${time[0]}:`}
                   {time[1] < 10 ? `0${time[1]} ` : `${time[1]} `}

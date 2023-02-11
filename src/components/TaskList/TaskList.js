@@ -6,7 +6,7 @@ import Task from "../Task";
 export default function TaskList(props) {
   const { editTask } = props;
   const { tasks, onToggleDone, onDeleted } = props;
-  const { playTimer, pauseTimer } = props;
+  const { playTaskTimer, pauseTaskTimer } = props;
   const { convertSecToMin } = props;
 
   const elements = tasks.map((item) => {
@@ -22,8 +22,8 @@ export default function TaskList(props) {
         onToggleDone={() => onToggleDone(id)}
         onDeleted={() => onDeleted(id)}
         editTask={editTask}
-        playTimer={playTimer}
-        pauseTimer={pauseTimer}
+        playTaskTimer={playTaskTimer}
+        pauseTaskTimer={pauseTaskTimer}
         timeLeft={timeLeft}
         convertSecToMin={convertSecToMin}
       />

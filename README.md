@@ -1,5 +1,8 @@
 # todo-app-react - branch: task_timer
 
+App working on Vercel:
+https://todo-app-react-git-tasktimer-galichandrey.vercel.app/
+
 2023 02 11
 Improvements:
 

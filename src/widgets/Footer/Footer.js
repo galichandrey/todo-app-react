@@ -2,7 +2,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import TasksFilter from "../TasksFilter";
+import TasksFilter from "../../features/TasksFilter";
 
 function Footer(props) {
   // eslint-disable-next-line object-curly-newline

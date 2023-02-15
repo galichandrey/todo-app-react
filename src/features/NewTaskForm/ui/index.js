@@ -1,7 +1,9 @@
 /* eslint-disable no-console */
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import "./NewTaskForm.css";
+import "./index.css";
+
+import convertMinToSec from "../model";
 
 export default class NewTaskForm extends Component {
   constructor(props) {
@@ -33,7 +35,6 @@ export default class NewTaskForm extends Component {
     const { addItem } = this.props;
     const { taskText, min, sec } = this.state;
     if (!min && !sec) return;
-    const { convertMinToSec } = this.props;
 
     const time = convertMinToSec(min, sec);
 
@@ -50,7 +51,6 @@ export default class NewTaskForm extends Component {
   render() {
     const { taskText, min, sec } = this.state;
     return (
-      // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
       <form
         onSubmit={this.onSubmit}
         className="new-todo-form"
@@ -79,7 +79,7 @@ export default class NewTaskForm extends Component {
           name="sec"
           value={sec}
         />
-        <button
+        <input
           type="submit"
           className="newTaskForm__submit"
           aria-label="Submit"

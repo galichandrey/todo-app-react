@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import NewTaskForm from "../NewTaskForm/NewTaskForm";
+import NewTaskForm from "../../features/NewTaskForm";
 
 export default function Header({ addItem, convertMinToSec }) {
   return (

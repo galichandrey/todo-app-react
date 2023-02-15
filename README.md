@@ -3,6 +3,13 @@
 App working on Vercel:
 https://todo-app-react-git-tasktimer-galichandrey.vercel.app/
 
+2023 02 16
+Improvements:
+* Таймер не должен запускаться если задача выполнена
+* Таймер должен стопаться когда отмечаешь задачу выполненной
+* timerId вынесен в компонент Timer.
+* Структура файлов. Осуществлена первая попытка сделать структуру файлов приближенную к Feature-Sliced Design (https://feature-sliced.design/)
+
 2023 02 11
 Improvements:
 

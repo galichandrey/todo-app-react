@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { formatDistanceToNow } from "date-fns";
 
+import Timer from "../../../entities/Timer";
+
 export default class Task extends React.Component {
   constructor(props) {
     super(props);
@@ -43,8 +45,7 @@ export default class Task extends React.Component {
     const { taskText } = this.state;
     const { isEditing } = this.state;
     const { timeLeft } = this.props;
-    const { convertSecToMin } = this.props;
-    const time = convertSecToMin(timeLeft);
+
     const { playTaskTimer, pauseTaskTimer } = this.props;
 
     let classNames = "active";
@@ -82,22 +83,13 @@ export default class Task extends React.Component {
               />
               <label htmlFor="idForInput">
                 <span className="title">{taskText}</span>
-                <span className="description">
-                  <button
-                    type="button"
-                    className="icon icon-play"
-                    onClick={() => playTaskTimer(id)}
-                    aria-label="Play"
-                  />
-                  <button
-                    type="button"
-                    className="icon icon-pause"
-                    onClick={() => pauseTaskTimer(id)}
-                    aria-label="Pause"
-                  />
-                  {time[0] < 10 ? ` 0${time[0]}:` : ` ${time[0]}:`}
-                  {time[1] < 10 ? `0${time[1]} ` : `${time[1]} `}
-                </span>
+                <Timer
+                  id={id}
+                  done={done}
+                  timeLeft={timeLeft}
+                  playTaskTimer={playTaskTimer}
+                  pauseTaskTimer={pauseTaskTimer}
+                />
                 <span className="description">{this.taskCreationDateConverted()}</span>
               </label>
               <button

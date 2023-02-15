@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import Task from "../Task";
+import Task from "../../features/Task";
 
 export default function TaskList(props) {
   const { editTask } = props;

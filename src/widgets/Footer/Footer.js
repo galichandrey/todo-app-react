@@ -31,16 +31,14 @@ function Footer(props) {
 export default Footer;
 
 Footer.propTypes = {
-  tasks: PropTypes.shape({
-    filter: PropTypes.func,
-  }),
+  tasks: PropTypes.arrayOf(PropTypes.object),
   filter: PropTypes.string,
   onFiltered: PropTypes.func,
   clearCompleted: PropTypes.func,
 };
 
 Footer.defaultProps = {
-  tasks: {},
+  tasks: [],
   filter: "all",
   onFiltered: () => {},
   clearCompleted: () => {},

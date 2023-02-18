@@ -1,112 +1,102 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { formatDistanceToNow } from "date-fns";
 
 import Timer from "../../../entities/Timer";
 
-export default class Task extends React.Component {
-  constructor(props) {
-    super(props);
-    const { taskText } = this.props;
-    this.state = {
-      taskText,
-      isEditing: false,
-    };
-  }
+function Task(props) {
+  const { taskText } = props;
+  const [taskTextLocal, setTaskTextLocal] = useState(taskText);
+  const [isEditing, setIsEditing] = useState();
 
-  handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-
-    const { taskText } = this.state;
-    if (!taskText.trim()) return;
-    const { id, editTask } = this.props;
-    editTask(id, taskText);
-    this.setEditingState(false);
+    if (!taskTextLocal.trim()) return;
+    const { id, editTask } = props;
+    editTask(id, taskTextLocal);
+    setIsEditing(false);
   };
 
-  handleEditing = (event) => {
-    this.setState({ taskText: event.target.value });
+  const handleEditing = (event) => {
+    setTaskTextLocal(event.target.value);
   };
 
-  setEditingState = (isEdit) => {
-    this.setState(() => ({
-      isEditing: isEdit,
-    }));
-  };
-
-  taskCreationDateConverted() {
-    const { taskCreationDate } = this.props;
+  const taskCreationDateConverted = () => {
+    const { taskCreationDate } = props;
     return formatDistanceToNow(taskCreationDate, { addSuffix: true });
+  };
+
+  useEffect(() => {
+    const { id, editTask } = props;
+    editTask(id, taskTextLocal);
+    return setTaskTextLocal(taskTextLocal);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [taskTextLocal]);
+
+  const { id, done } = props;
+  const { onToggleDone, onDeleted } = props;
+  const { timeLeft, updateTimeLeft } = props;
+
+  let classNames = "active";
+  let checked = false;
+  if (done) {
+    checked = true;
+    classNames = "completed";
   }
 
-  render() {
-    const { id, done } = this.props;
-    const { onToggleDone, onDeleted } = this.props;
-    const { taskText } = this.state;
-    const { isEditing } = this.state;
-    const { timeLeft, updateTimeLeft } = this.props;
+  if (isEditing) {
+    classNames = "editing";
+  }
 
-    let classNames = "active";
-    let checked = false;
-    if (done) {
-      checked = true;
-      classNames = "completed";
-    }
-
-    if (isEditing) {
-      classNames = "editing";
-    }
-
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <li
-          key={id}
-          className={classNames}
-        >
-          {isEditing ? (
+  return (
+    <form onSubmit={handleSubmit}>
+      <li
+        key={id}
+        className={classNames}
+      >
+        {isEditing ? (
+          <input
+            type="text"
+            className="edit"
+            value={taskText}
+            onChange={handleEditing}
+            id="idForInput"
+          />
+        ) : (
+          <div className="view">
             <input
-              type="text"
-              className="edit"
-              value={taskText}
-              onChange={this.handleEditing}
-              id="idForInput"
+              className="toggle"
+              type="checkbox"
+              onChange={onToggleDone}
+              checked={checked}
             />
-          ) : (
-            <div className="view">
-              <input
-                className="toggle"
-                type="checkbox"
-                onChange={onToggleDone}
-                checked={checked}
+            <label htmlFor="idForInput">
+              <span className="title">{taskText}</span>
+              <Timer
+                id={id}
+                done={done}
+                timeLeft={timeLeft}
+                updateTimeLeft={updateTimeLeft}
               />
-              <label htmlFor="idForInput">
-                <span className="title">{taskText}</span>
-                <Timer
-                  id={id}
-                  done={done}
-                  timeLeft={timeLeft}
-                  updateTimeLeft={updateTimeLeft}
-                />
-                <span className="description">{this.taskCreationDateConverted()}</span>
-              </label>
-              <button
-                className="icon icon-edit"
-                type="button"
-                aria-label="Edit"
-                onClick={() => this.setEditingState(true)}
-              />
-              <button
-                className="icon icon-destroy"
-                type="button"
-                aria-label="Delete"
-                onClick={onDeleted}
-              />
-            </div>
-          )}
-        </li>
-      </form>
-    );
-  }
+              <span className="description">{taskCreationDateConverted()}</span>
+            </label>
+            <button
+              className="icon icon-edit"
+              type="button"
+              aria-label="Edit"
+              onClick={() => setIsEditing(true)}
+            />
+            <button
+              className="icon icon-destroy"
+              type="button"
+              aria-label="Delete"
+              onClick={onDeleted}
+            />
+          </div>
+        )}
+      </li>
+    </form>
+  );
 }
 
 Task.defaultProps = {
@@ -122,3 +112,5 @@ Task.propTypes = {
   onToggleDone: PropTypes.func,
   onDeleted: PropTypes.func,
 };
+
+export default Task;

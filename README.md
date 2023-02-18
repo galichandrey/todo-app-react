@@ -6,8 +6,8 @@ https://todo-app-react-git-tasktimerhooks-galichandrey.vercel.app
 2023 02 18
 Improvements:
 * playTaskTime & pauseTaskTimer methods moved to Timer component.
-* Component refactored from classes to Hooks:
-  * Task, NewTaskForm
+* Components refactored from classes to Hooks:
+  * Task, NewTaskForm, TaskFilter
 
 2023 02 16
 Improvements:

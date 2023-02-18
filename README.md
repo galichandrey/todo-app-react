@@ -3,6 +3,10 @@
 App working on Vercel:
 https://todo-app-react-git-tasktimer-galichandrey.vercel.app/
 
+2023 02 18
+Improvements:
+* playTaskTime и pauseTaskTimer - перенесены из компонента App в компонент Timer.
+
 2023 02 16
 Improvements:
 * Таймер не должен запускаться если задача выполнена

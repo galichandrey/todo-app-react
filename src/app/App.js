@@ -125,37 +125,18 @@ export default class App extends Component {
     });
   };
 
-  playTaskTimer = (id) => {
-    const timerId = setInterval(() => {
-      this.setState(({ tasks }) => {
-        const index = tasks.findIndex((element) => element.id === id);
-        const oldItem = tasks[index];
-        let timeLeft = oldItem.timeLeft - 1;
-        if (timeLeft <= 0) {
-          this.pauseTaskTimer(id);
-          timeLeft = 0;
-        }
-        const newItem = { ...oldItem, timeLeft };
-
-        const before = tasks.slice(0, index);
-        const after = tasks.slice(index + 1);
-
-        const newArray = [...before, newItem, ...after];
-        return {
-          tasks: newArray,
-        };
-      });
-    }, 1000);
-
-    return timerId;
-  };
-
-  pauseTaskTimer = (id) => {
-    const { tasks } = this.state;
-    const index = tasks.findIndex((element) => element.id === id);
-    const { timerId } = tasks[index];
-
-    clearInterval(timerId);
+  updateTimeLeft = (id, timeLeft = 0) => {
+    this.setState(({ tasks }) => {
+      const index = tasks.findIndex((element) => element.id === id);
+      const oldItem = tasks[index];
+      const newItem = { ...oldItem, timeLeft };
+      const before = tasks.slice(0, index);
+      const after = tasks.slice(index + 1);
+      const newArray = [...before, newItem, ...after];
+      return {
+        tasks: newArray,
+      };
+    });
   };
 
   render() {
@@ -165,10 +146,7 @@ export default class App extends Component {
 
     return (
       <section className="todoapp">
-        <Header
-          addItem={this.addItem}
-          convertMinToSec={this.convertMinToSec}
-        />
+        <Header addItem={this.addItem} />
 
         <section className="main">
           <TaskList
@@ -176,9 +154,7 @@ export default class App extends Component {
             onToggleDone={this.onToggleDone}
             onDeleted={this.deleteItem}
             editTask={this.editTask}
-            playTaskTimer={this.playTaskTimer}
-            pauseTaskTimer={this.pauseTaskTimer}
-            convertSecToMin={this.convertSecToMin}
+            updateTimeLeft={this.updateTimeLeft}
           />
           <Footer
             tasks={tasks}

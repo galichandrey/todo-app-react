@@ -6,8 +6,7 @@ import Task from "../../features/Task";
 export default function TaskList(props) {
   const { editTask } = props;
   const { tasks, onToggleDone, onDeleted } = props;
-  const { playTaskTimer, pauseTaskTimer } = props;
-  const { convertSecToMin } = props;
+  const { updateTimeLeft } = props;
 
   const elements = tasks.map((item) => {
     // eslint-disable-next-line object-curly-newline
@@ -22,10 +21,8 @@ export default function TaskList(props) {
         onToggleDone={() => onToggleDone(id)}
         onDeleted={() => onDeleted(id)}
         editTask={editTask}
-        playTaskTimer={playTaskTimer}
-        pauseTaskTimer={pauseTaskTimer}
+        updateTimeLeft={updateTimeLeft}
         timeLeft={timeLeft}
-        convertSecToMin={convertSecToMin}
       />
     );
   });

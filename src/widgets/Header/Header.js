@@ -3,14 +3,11 @@ import PropTypes from "prop-types";
 
 import NewTaskForm from "../../features/NewTaskForm";
 
-export default function Header({ addItem, convertMinToSec }) {
+export default function Header({ addItem }) {
   return (
     <header className="header">
       <h1>todos</h1>
-      <NewTaskForm
-        addItem={addItem}
-        convertMinToSec={convertMinToSec}
-      />
+      <NewTaskForm addItem={addItem} />
     </header>
   );
 }

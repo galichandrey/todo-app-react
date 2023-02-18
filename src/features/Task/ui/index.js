@@ -44,9 +44,7 @@ export default class Task extends React.Component {
     const { onToggleDone, onDeleted } = this.props;
     const { taskText } = this.state;
     const { isEditing } = this.state;
-    const { timeLeft } = this.props;
-
-    const { playTaskTimer, pauseTaskTimer } = this.props;
+    const { timeLeft, updateTimeLeft } = this.props;
 
     let classNames = "active";
     let checked = false;
@@ -87,8 +85,7 @@ export default class Task extends React.Component {
                   id={id}
                   done={done}
                   timeLeft={timeLeft}
-                  playTaskTimer={playTaskTimer}
-                  pauseTaskTimer={pauseTaskTimer}
+                  updateTimeLeft={updateTimeLeft}
                 />
                 <span className="description">{this.taskCreationDateConverted()}</span>
               </label>

@@ -107,8 +107,8 @@ Task.defaultProps = {
 };
 
 Task.propTypes = {
-  taskText: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  taskCreationDate: PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.number]),
+  taskText: PropTypes.string,
+  taskCreationDate: PropTypes.objectOf(PropTypes.number),
   onToggleDone: PropTypes.func,
   onDeleted: PropTypes.func,
 };

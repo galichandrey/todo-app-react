@@ -1,9 +1,10 @@
+/* eslint-disable react/no-unused-prop-types */
 import React from "react";
 import PropTypes from "prop-types";
 
 import Task from "../../features/Task";
 
-export default function TaskList(props) {
+function TaskList(props) {
   const { editTask } = props;
   const { tasks, onToggleDone, onDeleted } = props;
   const { updateTimeLeft } = props;
@@ -29,13 +30,20 @@ export default function TaskList(props) {
   return <ul className="todo-list">{elements}</ul>;
 }
 
-TaskList.defaultProps = {
-  tasks: PropTypes.shape({
-    taskText: PropTypes.string,
-    done: PropTypes.bool,
-    taskCreationDate: PropTypes.number,
-    id: PropTypes.number,
-  }),
-  onToggleDone: PropTypes.func,
+TaskList.propTypes = {
   onDeleted: PropTypes.func,
+  onToggleDone: PropTypes.func,
+  taskText: PropTypes.string,
+  tasks: PropTypes.arrayOf(PropTypes.object),
+  updateTimeLeft: PropTypes.func,
 };
+
+TaskList.defaultProps = {
+  tasks: {},
+  taskText: "hello",
+  onToggleDone: () => {},
+  onDeleted: () => {},
+  updateTimeLeft: () => {},
+};
+
+export default TaskList;

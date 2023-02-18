@@ -5,7 +5,7 @@ https://todo-app-react-git-tasktimer-galichandrey.vercel.app/
 
 2023 02 18
 Improvements:
-* playTaskTime и pauseTaskTimer - перенесены из компонента App в компонент Timer.
+* playTaskTime & pauseTaskTimer methods moved to Timer component.
 
 2023 02 16
 Improvements:

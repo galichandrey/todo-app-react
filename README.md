@@ -3,9 +3,13 @@
 App working on Vercel:
 https://todo-app-react-git-tasktimerhooks-galichandrey.vercel.app
 
+2023 02 19:
+* Timer component refactored from classes to Hooks.
+
 2023 02 18
 Improvements:
 * playTaskTime & pauseTaskTimer methods moved to Timer component.
+* PropTypes more accurate.
 * Components refactored from classes to Hooks:
   * App, NewTaskForm, Task, TaskFilter
 

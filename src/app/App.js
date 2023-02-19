@@ -17,11 +17,11 @@ const createTodoItem = (todoText = "My Task", timeLeft = 0, taskCreationDate = n
 });
 
 const tasksInitial = [
-  createTodoItem("First task", 95, new Date("Feb 15 2023 09:03:27")),
-  createTodoItem("Second task", 111, new Date("Feb 15 2023 10:23:27")),
-  createTodoItem("Another task", 1110, new Date("Feb 15 2023 10:33:27")),
-  createTodoItem("Some task", 100, new Date("Feb 15 2023 10:43:27")),
-  createTodoItem("Super task!", 10, new Date("Feb 15 2023 11:53:27")),
+  createTodoItem("First task", 55, new Date("Feb 19 2023 09:03:27")),
+  createTodoItem("Second task", 111, new Date("Feb 19 2023 10:23:27")),
+  createTodoItem("Another task", 1111, new Date("Feb 19 2023 10:33:27")),
+  createTodoItem("Some task", 10, new Date("Feb 19 2023 10:43:27")),
+  createTodoItem("Super task!", 3, new Date("Feb 19 2023 11:53:27")),
 ];
 
 function App() {
